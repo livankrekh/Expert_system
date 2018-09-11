@@ -1,5 +1,6 @@
 #!/usr/local/bin/python3
 
+import copy
 import sys
 import re
 from KB_fact import *
@@ -33,10 +34,24 @@ def line_parser(file):
 				taskList = line
 			else:
 				newKB = KB_fact(line, FactBase, KB_Tree)
-				if (newKB.name in KB_Tree):
-					KB_Tree[newKB.name].append(newKB)
+				names = []
+				if (newKB.name.find('|') != -1 or newKB.name.find('^') != -1 or newKB.name.find('!') != -1):
+					raise Exception('Inclution has non-supported logical operator!')
+				if (newKB.name.find('+') != -1):
+					names = newKB.name.split('+')
 				else:
-					KB_Tree[newKB.name] = [newKB]
+					names = [newKB.name]
+
+				for n in names:
+					kb_copy = copy.deepcopy(newKB)
+					kb_copy.name = n
+					kb_copy.tree = KB_Tree
+					kb_copy.factBase = FactBase
+
+					if (n in KB_Tree):
+						KB_Tree[n].append(kb_copy)
+					else:
+						KB_Tree[n] = [kb_copy]
 	except Exception as err:
 		raise Exception(str(err) + ". At line #" + str(i + 1))
 
