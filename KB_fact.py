@@ -33,6 +33,10 @@ class KB_fact:
 				if (elem in self.factBase):
 					stack.append(True)
 				elif (elem in self.tree):
+					if (elem == self.name):
+						stack.append(False)
+						continue
+
 					res = False
 
 					for eq in self.tree[elem]:
@@ -46,7 +50,6 @@ class KB_fact:
 
 				else:
 					stack.append(False)
-					# print('Not found fact \'', elem, '\'! By default = False', sep='')
 			else:
 				if (elem == '!'):
 					stack[-1] = not stack[-1]
@@ -74,7 +77,7 @@ class Stack:
         return self.items == []
 
     def push(self, item):
-        self.items.insert(0,item)
+        self.items.insert(0, item)
 
     def pop(self):
         return self.items.pop(0)

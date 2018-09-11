@@ -27,7 +27,7 @@ def line_parser(file):
 
 				for elem in line:
 					FactBase[elem] = True
-			elif (line.startswith('?')):
+			elif (line.find('?') != -1):
 				line = line.replace('?', '')
 				if (line.find(',') != -1):
 					line = list(filter(None, line.split(',')))
@@ -60,7 +60,7 @@ def line_parser(file):
 def resolveTask(taskList):
 	for task in taskList:
 		if task in FactBase:
-			print(task, "-", True)
+			print("\033[1m\033[32m", task, " - ", True, "\033[0m", sep='')
 		elif task in KB_Tree:
 			res = False
 
@@ -71,10 +71,9 @@ def resolveTask(taskList):
 					res = solve
 					break
 
-			print(task, '-', res)
+			print("\033[1m\033[32m", task, ' - ', res, "\033[0m", sep='')
 		else:
-			print('Fact \'', task, '\' not found!', sep='')
-			print(task, '-', False)
+			print("\033[1m\033[32m", task, ' - ', False, "\033[0m", sep='')
 
 if __name__ == "__main__":
 	taskList = str()
@@ -88,10 +87,9 @@ if __name__ == "__main__":
 		file = open(sys.argv[1], "r")
 
 		taskList = line_parser(file)
+		resolveTask(taskList)
 	except Exception as err:
-		print("Error:", err)
-
-	resolveTask(taskList)
+		print("\033[1m\033[41mError:", err, '\033[0m')
 
 	while True:
 		try:
@@ -111,4 +109,4 @@ if __name__ == "__main__":
 		except KeyboardInterrupt:
 			exit()
 		except Exception as err:
-			print("Error:", err)
+			print("\033[1m\033[41mError:", err, '\033[0m')
