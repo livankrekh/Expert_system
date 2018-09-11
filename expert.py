@@ -14,7 +14,7 @@ def line_parser(file):
 	try:
 		for i, line in enumerate(file):
 			line = line.split('#')[0]
-			line = line.replace(' ', '').replace('\n', '')
+			line = line.replace(' ', '').replace('\t', '').replace('\n', '')
 			newKB = list()
 
 			if (line == ''):
