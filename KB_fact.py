@@ -25,6 +25,16 @@ class KB_fact:
 		self.table = toPolish(eqution).split()
 		self.name = name
 
+	def resolve_name(self, name):
+
+		if (name.find('|') != -1 or name.find('^') != -1 or name.find('!') != -1):
+			raise Exception('Inclution has non-supported logical operator!')
+
+		name_arr = name.split('+')
+
+		for n in name_arr[1:]:
+			new_fact = KB_fact(self.raw)
+
 	def resolve(self):
 		stack = []
 
