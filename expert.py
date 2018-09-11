@@ -62,14 +62,25 @@ def resolveTask(taskList):
 		if task in FactBase:
 			print("\033[1m\033[32m", task, " - ", True, "\033[0m", sep='')
 		elif task in KB_Tree:
+			equition = None
 			res = False
+			solve = None
 
 			for eq in KB_Tree[task]:
-				solve = eq.resolve()
+				if (eq.implication == False):
+					if (equition == None):
+						equition = eq.resolve()
+					elif (equition != eq.resolve()):
+						raise Exception('Unresolved equtions in cause of different results of logical equality in var \'' + eq.name + '\'')
+				else:
+					solve = eq.resolve()
 
 				if solve:
 					res = solve
 					break
+
+			if (res != equition and equition != None):
+				raise Exception('Unresolved equtions in cause of different results of logical equality in var \'' + eq.name + '\'')
 
 			print("\033[1m\033[32m", task, ' - ', res, "\033[0m", sep='')
 		else:
