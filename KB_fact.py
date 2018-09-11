@@ -7,15 +7,18 @@ class KB_fact:
 		self.table = []
 		self.factBase = fb
 		self.tree = vocab
+		self.implication = None
 
 		if (raw.find('=>') == -1):
 			raise Exception('No implication (\'=>\') or equality (\'<=>\') sign')
 		elif (raw.find('<=>') != -1):
 			eqution = raw.split('<=>')[0]
-			name = raw.split('<=>')[1]
+			name = raw.split('<=>')[1].replace('\n', '')
+			self.implication = False
 		else:
 			eqution = raw.split('=>')[0]
-			name = raw.split('=>')[1]
+			name = raw.split('=>')[1].replace('\n', '')
+			self.implication = True
 
 		eqution = eqution.replace('+', ' + ').replace('|', ' | ').replace('^', ' ^ ').replace('!', ' ! ').replace('(', ' ( ').replace(')', ' ) ').replace('  ', ' ')
 		eqution = list(filter(None, eqution.split()))
@@ -30,7 +33,17 @@ class KB_fact:
 				if (elem in self.factBase):
 					stack.append(True)
 				elif (elem in self.tree):
-					stack.append(self.tree[elem].resolve())
+					res = False
+
+					for eq in self.tree[elem]:
+						solve = eq.resolve()
+
+						if solve:
+							res = solve
+							break
+
+					stack.append(res)
+
 				else:
 					stack.append(False)
 					print('Not found fact \'', elem, '\'! By default = False', sep='')
