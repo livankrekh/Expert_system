@@ -36,8 +36,8 @@ File `examples/AND_OR1.ex`
 S | E | V => V
 V + !V => C
 
-=S
-?VC # V - true, C - false
+=S # initialize S to true
+?VC # Results V - true, C - false
 ```
 
 File `examples/XOR1.ex`
@@ -45,15 +45,15 @@ File `examples/XOR1.ex`
 A ^ (X | Y) => V
 N + (B ^ V) ^ !V => S
 
-=XBN
-?SV # S - false, V - true
+=XBN # initialize X, B and N to true
+?SV # Results: S - false, V - true
 ```
 
 ## Other
 
 After file is read and results is displayed, you can in console mode add rules and facts, initialize facts (by operator `=`) and display results (by operator `?`)
 
-Besides that, in console mode you can:
+Besides that, in `console mode` you can:
 * Reset all rules by next command
 ```
 >> remove base
