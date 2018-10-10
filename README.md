@@ -7,11 +7,11 @@ Present Expert system is based on `backward chaining` algorithm
 ## Run
 
 ```
-> ./expert.py you_knowledge_base_file
+> ./expert.py your_knowledge_base_file
 ```
 OR
 ```
-> python3 expert.py you_knowledge_base_file
+> python3 expert.py your_knowledge_base_file
 ```
 
 ## Format of file
